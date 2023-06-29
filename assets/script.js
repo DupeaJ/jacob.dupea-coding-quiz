@@ -1,132 +1,163 @@
 //Array of quiz questions and correct answers
 var quizQuestions = [
-    {
-        question: "What is the syntax to add a hover effect on your mouse?",
-    },
-
-     answers: {
-            a: ":onhover",
-            b: "element.hover",
-            c: ":hover",
-            d: "(hover = id)",
-        },
-        correctAnswer: 'c'
-    
-    {
-        question: "Question 2",
-        answers: {
-            a: "Question 50",
-            b: "Question 2",
-            c: "Question 1",
-            d: "Not this one",
-        },
-        correctAnswer: 'b'
-    },
-    {
-        question: "Question 4",
-        answers: {
-            a: "Question 50",
-            b: "Question 2",
-            c: "Question 1",
-            d: "This one",
-        },
-        correctAnswer: 'd'
-    },
-    {
-        question: "Question 5",
-        answers: {
-            a: "Question 5",
-            b: "Question 2",
-            c: "Question 1",
-            d: "Don't pick this one",
-        },
-        correctAnswer: 'a'
-    },
+  {
+    question: "What is the syntax to add a hover effect on your mouse?",
+    options: [
+      ":onhover",
+      "element.hover",
+      ":hover",
+      "(hover = id)",
+    ],
+    correctAnswer: ":hover"
+  },
+  {
+    question: "Question 2",
+    options: [
+      "Question 50",
+      "Question 2",
+      "Question 1",
+      "Not this one",
+    ],
+    correctAnswer: "Question 2"
+  },
+  {
+    question: "Question 4",
+    options: [
+      "Question 50",
+      "Question 2",
+      "Question 1",
+      "This one",
+    ],
+    correctAnswer: "This one"
+  },
+  {
+    question: "Question 5",
+    options: [
+      "Question 5",
+      "Question 2",
+      "Question 1",
+      "Don't pick this one",
+    ],
+    correctAnswer: "Question 5"
+  },
 ];
 
-//making new keywords attached to html elements
-var quizContainer = document.getElementById('quiz');
-var quizAnswers = document.getElementById('answers')
-var resultsContainer = document.getElementById('results');
-var startButton = document.getElementById('start');
-var submitButton = document.getElementById('submit');
-var timerContainer = document.getElementById('timer');
+const startQuizButton = document.getElementById("start-quiz");
+const timerElement = document.getElementById("timer");
+const submitButton = document.getElementById("submit");
+const questionContainer = document.getElementById("question-container");
+const optionList = document.getElementById("option-list");
+const feedbackText = document.getElementById("feedback-text");
 
-//setting initial information for quiz
-var currentQuestionIndex = 0;
-var timeLeft = 60;
-var timerInterval;
-var score = 0;
+let timer = 60;
+let intervalId = null;
+let score = 0;
+let currentQuestionIndex = 0;
 
-//adds start quiz function with timer 
-function startQuiz(){
-    
-    timerInterval = setInterval(function() {//timerInterval is described, repeats line of code
-        timeLeft--; //time left is set to -- because timeleft is set to 60 so it will decrease by 1 evertime it repeats
-        timerContainer.textContent = 'Time: ' + timeLeft; //displays id timer with "time:" and adds timeLeft function to display correct time
+function updateTimer() {
+  timer--;
+  timerElement.textContent = timer;
 
-        if (timeLeft <=0|| currentQuestionIndex === quizQuestions.length) {//ends timer if time reaches 0
-            endQuiz();//quiz ends when time reaches 0
-        }
-    }, 1000);//adds delay of 1000 milliseconds to function repeat
-
-    showQuestion();
+  if (timer === 0) {
+    stopTimer();
+    endQuiz();
+  }
 }
 
-function showQuestion(){//adds function to show questions on screen
-    var currentQuestion= quizQuestions[currentQuestionIndex];//creates array with questions and sets it to the curent question number youre on
-    var answers = [];//sets answers to empty string
-
-    for (var letter in currentQuestion.answers) {//selects letters of the current question in answers array
-        answers.push(//adds new item to answers, and repeats for each letter
-            '<label>'
-            + '<input type="checkbox" name="question'+ currentQuestionIndex+'" value="'+ letter + '">'
-            + letter + ': '
-            + currentQuestion.answers[letter]
-            + '</checkbox>'
-        );
-    }
-
-    quizContainer.innerHTML = '<div class="question">' + currentQuestion.question + '</div>'
-        + '<div class="answers">' + answers.join('') + '</div>';
+function startTimer() {
+  timerElement.textContent = timer;
+  intervalId = setInterval(updateTimer, 1000);
 }
 
-function checkAnswer() {
-    var selectedOption = document.querySelector('input[name="question' + currentQuestionIndex + '"]:checked');
-    
-    if (selectedOption) {
-        var selectedAnswer = selectedOption.value;
-
-        if (selectedAnswer === quizQuestions[currentQuestionIndex].correctAnswer) {
-            score++;
-        } else {
-            timeLeft -= 10;
-        }
-
-        currentQuestionIndex++;
-
-        if (currentQuestionIndex === quizQuestions.length || timeLeft <= 0) {
-            endQuiz();
-        } else {
-            showQuestion();
-        }
-    }
+function stopTimer() {
+  clearInterval(intervalId);
 }
 
 function endQuiz() {
-    clearInterval(timerInterval);
-    timerContainer.textContent = 'Time: ' + timeLeft;
-    quizContainer.innerHTML = '';
+  questionContainer.style.display = "none";
+  submitButton.style.display = "none";
 
-    var finalScore = Math.max(0, score * (timeLeft > 0 ? 1 : 0));
 
-    resultsContainer.innerHTML = 'Final Score: ' + finalScore;
+  localStorage.setItem("quizScore", score);
 
-    var initials = prompt('Enter your initials:');
-   
-    localStorage.setItem('quizScore', finalScore);
-    localStorage.setItem('quizInitials', initials);
+
+  window.open("./assets/HighScores.html", "_blank");
+
+  const restartButton = document.createElement("button");
+  restartButton.textContent = "Restart Quiz";
+  restartButton.addEventListener("click", restartQuiz);
+  questionContainer.appendChild(restartButton);
 }
 
-startButton.addEventListener('click', startQuiz);
-submitButton.addEventListener('click', checkAnswer);
+function checkAnswer(selectedOption) {
+  const question = quizQuestions[currentQuestionIndex];
+
+  if (selectedOption === question.correctAnswer) {
+    score++;
+    feedbackText.textContent = "Correct!";
+    feedbackText.classList.add("correct");
+  } else {
+    timer -= 10;
+    timer = Math.max(timer, 0);
+    timerElement.textContent = timer;
+    feedbackText.textContent = "Wrong!";
+    feedbackText.classList.add("wrong");
+  }
+
+  optionList.innerHTML = "";
+
+  if (currentQuestionIndex < quizQuestions.length - 1) {
+    currentQuestionIndex++;
+    showQuestion();
+  } else {
+    stopTimer();
+    endQuiz();
+  }
+}
+
+function showQuestion() {
+  const question = quizQuestions[currentQuestionIndex];
+  const options = question.options;
+
+  questionContainer.innerHTML = "";
+  optionList.innerHTML = "";
+
+  const questionElement = document.createElement("h2");
+  questionElement.textContent = question.question;
+  questionContainer.appendChild(questionElement);
+
+  options.forEach((option) => {
+    const optionItem = document.createElement("li");
+    optionItem.textContent = option;
+    optionItem.addEventListener("click", () => checkAnswer(option));
+    optionList.appendChild(optionItem);
+  });
+  return;
+}
+
+
+
+function startQuiz() {
+  startQuizButton.style.display = "none";
+  questionContainer.style.display = "block";
+  submitButton.style.display = "block";
+
+  showQuestion();
+  startTimer();
+
+}
+function restartQuiz() {
+ 
+  score = 0;
+  currentQuestionIndex = 0;
+  timer = 60;
+  feedbackText.textContent = "";
+  timerElement.textContent = "";
+
+  questionContainer.innerHTML = "";
+  optionList.innerHTML = "";
+
+  startQuiz();
+}
+
+startQuizButton.addEventListener("click", startQuiz);
