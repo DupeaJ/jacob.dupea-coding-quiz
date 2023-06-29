@@ -54,7 +54,7 @@
   #submit:hover {
 	background-color: rgb(0, 0, 0);
   }
-  
+  */
   #timer {
 	position: absolute;
 	top: 5px;
@@ -66,7 +66,7 @@
 	text-align: center;
 	font-size: 30px;
   }
-  
+  /*
   li.correct {
 	background-color: lightgreen;
   }
