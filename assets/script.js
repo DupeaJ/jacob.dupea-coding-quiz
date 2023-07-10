@@ -21,9 +21,10 @@ var quizQuestions = [
         correctAnswer: "Object",
     },
 ];
-const scoresContainer = document.getElementById ("scoresHolder")
-const scoresList = document.getElementById ("score-list")
+const scoresContainer = document.getElementById("scoresHolder");
+const scoresList = document.getElementById("score-list");
 const startQuizButton = document.getElementById("start-quiz");
+const previousScoresButton = document.getElementById("highscores-btn");
 const timerElement = document.getElementById("timer");
 const restartButton = document.getElementById("restart");
 const questionContainer = document.getElementById("question-container");
@@ -36,13 +37,13 @@ let intervalId = null; //lets variable be empty until uppdated
 let score = 0; //score equals 0 and updates per correct answer
 let scoreTime = 0; //setting up recorder for time left on quiz
 let currentQuestionIndex = 0; //sets currentQuestionIndex to start at 0 and we can update it to another question
-
+restartButton.style.display = "none";
 
 function startQuiz() {
     startQuizButton.style.display = "none"; //starting quiz removes button
     questionContainer.style.display = "block"; //sets container to block
-    restartButton.style.display = "none"; //changes restart button to hide
-    
+    restartButton.style.display = "flex"; //changes restart button to hide
+
     showQuestion(); //starts questions
     startTimer(); //starts timer
 }
@@ -71,9 +72,10 @@ function stopTimer() {
 
 function endQuiz() {
     //endquiz function to hide questions and button
-    // questionContainer.style.display = "none";
-  scoresList.style.display = "block";
-  scoresContainer.style.display = "grid";
+    questionContainer.style.display = "block";
+    scoresList.style.display = "block";
+    feedbackText.style.display = "none";
+    scoresContainer.style.display = "grid";
     restartButton.style.display = "block";
     localStorage.setItem("quizScore", score); //grabs quiz score and stores it locally under score
     localStorage.setItem("timeLeft", scoreTime);
@@ -86,8 +88,8 @@ function endQuiz() {
     const storedInintialsid = localStorage.getItem("initials");
     if (storedInintialsid) {
         const scoreList = document.getElementById("score-list");
-      const scoreItem = document.createElement("li");
-        scoreItem.textContent = "initials: " + storedInintialsid;
+        const scoreItem = document.createElement("li");
+        scoreItem.textContent = "Initials: " + storedInintialsid;
         scoreList.appendChild(scoreItem);
     }
 
@@ -159,7 +161,14 @@ function showQuestion() {
 
     options.forEach((option) => {
         //similar to the last but where making a list of the available options
-        const optionItem = document.createElement("li");
+       const optionItem = document.createElement("li");
+      optionItem.style.border = "1px solid black";
+      optionItem.style.borderRadius = "5px";
+      optionItem.style.fontSize = "28px";
+      optionItem.style.padding = "5px";
+      optionItem.style.margin = "5px";
+      optionItem.style.backgroundColor = "Teal";
+      optionItem.style.color = "coral";
         optionItem.textContent = option;
         optionItem.addEventListener("click", () => checkAnswer(option)); //adds event listener onto option items with click function and we call to check the answer of which option clicked
         optionList.appendChild(optionItem); //appends it to the page
@@ -183,3 +192,43 @@ function restartQuiz() {
 
 restartButton.addEventListener("click", restartQuiz); //adds click funstion to restart quiz when u click restart, then calls the restatQuiz function
 startQuizButton.addEventListener("click", startQuiz); //adds click event to The start quiz button, then runs the startQuiz function
+function endQuiz2() {
+    //endquiz function to hide questions and button
+    questionContainer.style.display = "block";
+    scoresList.style.display = "block";
+    feedbackText.style.display = "none";
+    scoresContainer.style.display = "grid";
+    restartButton.style.display = "block";
+    //grabs quiz score and stores it locally under score
+
+    const storedScore = localStorage.getItem("quizScore");
+    const storedTimeLeft = localStorage.getItem("timeLeft");
+    const storedInintialsid = localStorage.getItem("initials");
+    if (storedInintialsid) {
+        const scoreList = document.getElementById("score-list");
+        const scoreItem = document.createElement("li");
+        scoreItem.textContent = "Initials: " + storedInintialsid;
+        scoreList.appendChild(scoreItem);
+    }
+
+    if (storedScore) {
+        const scoreList = document.getElementById("score-list");
+        const scoreItem = document.createElement("li");
+        scoreItem.textContent = " Score: " + storedScore;
+        scoreList.appendChild(scoreItem);
+    }
+
+    if (storedTimeLeft) {
+        const scoreList = document.getElementById("score-list");
+        const scoreItem = document.createElement("li");
+        scoreItem.textContent = "  Time: " + storedTimeLeft;
+        scoreList.appendChild(scoreItem);
+
+        const scoresDivider = document.getElementById("score-list");
+        const scoreDivided = document.createElement("br");
+        scoreDivided.textContent = "--------";
+        scoresDivider.appendChild(scoreDivided);
+    }
+    // window.open("./assets/HighScores.html", "_blank"); //when quiz is over opens new tab with scores stored in local
+}
+previousScoresButton.addEventListener("click", endQuiz2);

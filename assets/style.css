@@ -1,86 +1,125 @@
- .main {
-	display: flex;
-	width: 100%;
-	height: 100vh;
-	justify-content: center;
-	align-items: center;
-  }
-  header h1{
-	text-decoration: none;
-	font-size: 30px;
-	display: flex;
-	height: 40px;
+body {
+    margin: 0;
+    background-color: #297;
+}
 
-  }
-  
-  
-  a {
-	width: 180px;
-	text-decoration: none;
-	color: #297;
-	background-color: antiquewhite;
-	border-radius: 5px;
-	text-align: center;
-  }
-   
-  .card {
-	justify-content: center;
-	align-items: center;
-	display: flex;
-	flex-direction: column;
-  }
- 
-  #submit {
-	font-family: sans-serif;
-	font-size: 20px;
-	background-color: #297;
-	color: #fff;
-	border: 0px;
-	border-radius: 3px;
-	padding: 20px;
-	cursor: pointer;
-	margin-bottom: 20px;
-  }
-  
-  #submit:hover {
-	background-color: rgb(0, 0, 0);
-  }
-  
-  #timer {
-	position: absolute;
-	top: 5px;
-	right: 10px;
-	background-color: #297;
-	width: 50px;
-	height: 35px;
-	border-radius: 5px;
-	text-align: center;
-	font-size: 30px;
-  }
+.main {
+    margin: 0;
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
 
-  div#scoresHolder{
-	display: block;
-	justify-content: center;
+div.wrapper {
+    padding-top: 0;
+}
+header h1 {
+    margin: 0;
+    text-decoration: none;
+    font-size: 30px;
+    display: flex;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    background-color: teal;
+}
+div.card-header {
+    width: -webkit-fill-available;
+    display: flex;
+    background-color: #297;
+    color: gold;
+    justify-content: center;
+}
+div#option-list {
+    width: max-content;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    list-style: upper-alpha;
+}
+
+div#options-container {
+    justify-content: center;
+
+    display: flex;
+}
+
+#buttonContainer {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+}
+
+button.quiz-btn {
+    padding: 10px;
+	background-color: antiquewhite
+}
+
+#restart {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: darksalmon;
+}
+
+a {
+    width: 180px;
+    text-decoration: none;
+    color: #297;
+    background-color: antiquewhite;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.card {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+#timer {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    background-color: #297;
+    width: 50px;
+    height: 35px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 30px;
+}
+
+div#scoresHolder {
+    display: block;
+    justify-content: center;
     text-align: center;
     border-radius: 15px;
-	width: 25%;
-	height:fit-content;
-	background-color: blanchedalmond;
-  }
-  ul.scoresdecor{
-	display: grid;
-	list-style: none;
+    width: 25%;
+    height: fit-content;
+    background-color: blanchedalmond;
+}
+
+ul.scoresdecor {
+    font-size: 20px;
+    display: grid;
+    list-style: none;
     background-color: burlywood;
     border-radius: 5px;
     width: fit-content;
     padding: 10px;
-	text-align: left;
-  }
-  li.correct {
-	background-color: lightgreen;
-  }
-  
-  li.wrong {
-	background-color: tomato;
-  }
-  
+    text-align: left;
+}
+
+li.correct {
+    background-color: lightgreen;
+}
+
+li.wrong {
+    background-color: tomato;
+}

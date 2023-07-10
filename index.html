@@ -10,7 +10,6 @@
         <div class="wrapper">
             <header>
                 <h1>JavaScript Quiz</h1>
-                <button class="quiz-btn" id="highscores-btn">HighScores</button>
             </header>
             <div class="card">
                 <div class="card-header">
@@ -25,10 +24,15 @@
                 </div>
                 <div class="start-quiz" id="timer">60</div>
             </div>
-            <div id="option-list"></div>
-
+            <div id="options-container">
+              <div id="option-list"></div>
+            </div>
             <div id="feedback-text"></div>
-            <div id="restart">restart</div>
+            <container id="buttonContainer">
+            <button id="restart">restart</button>
+            
+                <button class="quiz-btn" id="highscores-btn">previous score</button>
+              </container>
             <div  id="scoresHolder">
                 Scores
                 <ul id="score-list" class="scoresdecor"></ul>
