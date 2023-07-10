@@ -72,7 +72,7 @@ function stopTimer() {
 
 function endQuiz() {
     //endquiz function to hide questions and button
-    questionContainer.style.display = "block";
+    questionContainer.style.display = "none";
     scoresList.style.display = "block";
     feedbackText.style.display = "none";
     scoresContainer.style.display = "grid";
