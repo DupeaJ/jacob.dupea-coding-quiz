@@ -1,35 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coding Quiz</title>
-    <link rel="stylesheet" href="./assets/style.css">
-</head>
-<body>
-    <div class="wrapper">
-      <header>
-        <h1>JavaScript Quiz</h1>
-        <button class="quiz-btn" id="highscores-btn"> HighScores</button>
-      </header>
-      <div class="card">
-        <div class="card-header">
-          <h2>ready to test your knowledge?</h2>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Coding Quiz</title>
+        <link rel="stylesheet" href="./assets/style.css" />
+    </head>
+    <body>
+        <div class="wrapper">
+            <header>
+                <h1>JavaScript Quiz</h1>
+                <button class="quiz-btn" id="highscores-btn">HighScores</button>
+            </header>
+            <div class="card">
+                <div class="card-header">
+                    <h2>ready to test your knowledge?</h2>
+                </div>
+                <div class="card-body">
+                    <div id="results"></div>
+                    <div id="question-container"></div>
+                </div>
+                <div class="card-footer">
+                    <button id="start-quiz" class="quiz-btn">Start Quiz</button>
+                </div>
+                <div class="start-quiz" id="timer">60</div>
+            </div>
+            <div id="option-list"></div>
+
+            <div id="feedback-text"></div>
+            <div id="restart">restart</div>
+            <div>
+                Scores
+                <ul id="score-list"></ul>
+            </div>
         </div>
-        <div class="card-body">
-          <div id="results"></div>
-          <div id="question-container"></div>
-        </div>
-        <div class="card-footer">
-          <button id="start-quiz" class="quiz-btn">Start Quiz</button>
-        </div>
-        <div class="start-quiz" id="timer">60</div>
-      </div>
-      <div id="option-list"></div>
-      
-      <div id="feedback-text"></div>
-      <div id="restart">restart</div>
-    </div>
-    <script src="./assets/script.js"></script>
-  </body>
+        <script src="./assets/script.js"></script>
+    </body>
 </html>
