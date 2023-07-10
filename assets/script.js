@@ -194,7 +194,7 @@ restartButton.addEventListener("click", restartQuiz); //adds click funstion to r
 startQuizButton.addEventListener("click", startQuiz); //adds click event to The start quiz button, then runs the startQuiz function
 function endQuiz2() {
     //endquiz function to hide questions and button
-    questionContainer.style.display = "block";
+    questionContainer.style.display = "none";
     scoresList.style.display = "block";
     feedbackText.style.display = "none";
     scoresContainer.style.display = "grid";
