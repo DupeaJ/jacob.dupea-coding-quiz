@@ -11,34 +11,34 @@ var quizQuestions = [
     correctAnswer: ":hover"
   },
   {
-    question: "Question 2",
+    question: "How do you comment and add notes in JavaScript?",
     options: [
-      "Question 50",
-      "Question 2",
-      "Question 1",
-      "Not this one",
+      "<!--comment>",
+      "//comment",
+      "/comment",
+      "*comment*",
     ],
-    correctAnswer: "Question 2"
+    correctAnswer: "//comment"
   },
   {
-    question: "Question 4",
+    question: "What HTML tag is used for a style sheet?",
     options: [
-      "Question 50",
-      "Question 2",
-      "Question 1",
-      "This one",
+      "<script>",
+      "<sylesheet>",
+      "<color>",
+      "<style>",
     ],
-    correctAnswer: "This one"
+    correctAnswer: "<style>"
   },
   {
-    question: "Question 5",
+    question: "How do you store items in your javascript?",
     options: [
-      "Question 5",
-      "Question 2",
-      "Question 1",
-      "Don't pick this one",
+      "Object",
+      "Boolean",
+      "script",
+      "HTML",
     ],
-    correctAnswer: "Question 5"
+    correctAnswer: "Object"
   },
 ];
 
@@ -52,6 +52,7 @@ const feedbackText = document.getElementById("feedback-text");
 let timer = 60; //timer is set to 60 constantant
 let intervalId = null; //lets variable be empty until uppdated
 let score = 0; //score equals 0 and updates per correct answer
+let scoreTime = 0; //setting up recorder for time left on quiz
 let currentQuestionIndex = 0; //sets currentQuestionIndex to start at 0 and we can update it to another question
 
 function updateTimer() {//timer function, timer starts at constant 60 then updates minus 1 each time its called
@@ -76,13 +77,13 @@ function stopTimer() {//stop timer function with clearInterval
 function endQuiz() { //endquiz function to hide questions and button
   questionContainer.style.display = "none";
   restartButton.style.display = "block";
-
-
+  
   localStorage.setItem("quizScore", score); //grabs quiz score and stores it locally under score
-
-
+  localStorage.setItem("timeLeft", scoreTime);
+  
+  
   window.open("./assets/HighScores.html", "_blank"); //when quiz is over opens new tab with scores stored in local
-
+  
 }
 
 function checkAnswer(selectedOption) { //defines checkAnswer under the selected question
@@ -96,6 +97,7 @@ function checkAnswer(selectedOption) { //defines checkAnswer under the selected 
     timer -= 10;
     timer = Math.max(timer, 0); //stops timer from going below 0
     timerElement.textContent = timer;//specifies to use current time
+    scoreTime = timer;
     feedbackText.textContent = "Wrong!";//adds list and text saying wrong
     feedbackText.classList.add("wrong");
   }
@@ -106,10 +108,11 @@ function checkAnswer(selectedOption) { //defines checkAnswer under the selected 
      currentQuestionIndex++;//update to next question in index
     showQuestion();//repeat show function unless all questions are answered
   } else {//then it stops the timer and quiz
-    stopTimer();
     endQuiz();
+    stopTimer();
+    
+    }
   }
-}
 
 function showQuestion() { //updates show Question 
   const question = quizQuestions[currentQuestionIndex];//const of question is the current question in index
